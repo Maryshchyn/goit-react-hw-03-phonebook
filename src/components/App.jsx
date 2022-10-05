@@ -56,7 +56,26 @@ export class App extends Component {
     this.setState({ filter: e.currentTarget.value });
   };
   
-
+  componentDidMount() {
+   
+    const contacts = localStorage.getItem('contacts');
+    const parseContacts = JSON.parse(contacts)
+    console.log(parseContacts);
+    if (parseContacts) {
+      this.setState({contacts: parseContacts})
+    }
+    
+  }
+  componentDidUpdate(prevProps, prefState) {
+    
+    if (this.state.contacts !== prefState.contacts) {
+      console.log('обновидлсь поле контактс');
+      localStorage.setItem('contacts',
+        JSON.stringify(this.state.contacts));
+    }
+    // console.log(prefState);
+    // console.log(this.state);
+  }
 
   render() {
     const {contacts, filter } = this.state;
